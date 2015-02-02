@@ -8,9 +8,27 @@
       result: timeOrientationResult
     },
     {
-      question: 'second question',
-      template: function() { return ''; },
-      result: function() {}
+      question: 'Place orientation',
+      template: function() {
+        var parts = [
+          'City: <input id="city" type="text" /> ',
+          'Country: <input id="country" type="text" />',
+          'Floor: <input id="floor" type="number" value="0" min="0" max="120"/>'
+        ];
+        return parts.join(' ');
+      },
+      result: function($questionBody) {
+        var $city = $questionBody.find('#city');
+        var $country = $questionBody.find('#country');
+        var $floor = $questionBody.find('#floor');
+
+        return {
+          city: $city.val(),
+          country: $country.val(),
+          floor: $floor.val()
+        };
+
+      }
     }
   ];
 
