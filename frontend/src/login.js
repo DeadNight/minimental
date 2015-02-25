@@ -1,5 +1,5 @@
 $(function(){
   $('.login-button').click(function() {
-    window.location = 'test.html'
+    window.location = 'exam.html'
   });
 });

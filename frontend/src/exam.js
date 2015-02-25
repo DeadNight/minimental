@@ -11,19 +11,84 @@
 
   var questions = [
     {
-      question: 'Time orientation:',
+      question: '',
+      template: function() {
+        return [
+          '<svg id="clock" viewBox="0 0 100 100">' +
+          '<circle id="face" cx="50" cy="50" r="45"/>' +
+          '<g id="hands" transform="translate(50, 50)">' +
+          '<rect id="min" x="0" y="0" width="3" height="40" rx="2" ry="2"/>' +
+          '<rect id="hour" x="-1" y="0" width="5" height="20" rx="2.5" ry="2.55"/>' +
+          '</g>' +
+          '</svg>'
+        ];
+      },
+      logic: function($questionBody) {
+        var origin = $('#hands').offset();
+        var minLastAngle = 0;
+        var hourLastAngle = 0;
+
+        $questionBody.find('#min').on('mousedown', function(event) {
+          var startPos = { left: event.clientX, top: event.clientY };
+          var $body = $('body');
+
+          $body.one('mouseup', function(event) {
+            $('body').off('mousemove.min');
+
+            var currentPos = { left: event.clientX, top: event.clientY };
+            var angle = Math.atan2(currentPos.top - origin.top, currentPos.left - origin.left);
+            angle -= Math.atan2(startPos.top - origin.top, startPos.left - origin.left);
+            angle += minLastAngle;
+            minLastAngle = angle;
+          });
+
+          $body.on('mousemove.min', function(event) {
+            var currentPos = { left: event.clientX, top: event.clientY };
+            var angle = Math.atan2(currentPos.top - origin.top, currentPos.left - origin.left);
+            angle -= Math.atan2(startPos.top - origin.top, startPos.left - origin.left);
+            angle += minLastAngle;
+            $questionBody.find('#min').css('transform', 'rotate('+angle+'rad)');
+          });
+        });
+
+        $questionBody.find('#hour').on('mousedown', function() {
+          var startPos = { left: event.clientX, top: event.clientY };
+          var $body = $('body');
+
+          $body.one('mouseup', function(event) {
+            $('body').off('mousemove.hour');
+
+            var currentPos = { left: event.clientX, top: event.clientY };
+            var angle = Math.atan2(currentPos.top - origin.top, currentPos.left - origin.left);
+            angle -= Math.atan2(startPos.top - origin.top, startPos.left - origin.left);
+            angle += hourLastAngle;
+            hourLastAngle = angle;
+          });
+
+          $body.on('mousemove.hour', function(event) {
+            var currentPos = { left: event.clientX, top: event.clientY };
+            var angle = Math.atan2(currentPos.top - origin.top, currentPos.left - origin.left);
+            angle -= Math.atan2(startPos.top - origin.top, startPos.left - origin.left);
+            angle += hourLastAngle;
+            $questionBody.find('#hour').css('transform', 'rotate('+angle+'rad)');
+          });
+        });
+      }
+    },
+    {
+      question: 'Time orientation',
       template: function() {
         var parts = [
-          'Day: <input id="day" type="number" value="1" min="1" max="31"/> ',
-          'Month: <input id="month" type="number" value="1" min="1" max="12"/>',
-          'Year: <input id="year" type="number" value="1900" min="1900" max="2100"/>',
-          'Season: <select id="season">' +
+          '<div>Day: <input id="day" type="number" value="1" min="1" max="31"/></div>',
+          '<div>Month: <input id="month" type="number" value="1" min="1" max="12"/></div>',
+          '<div>Year: <input id="year" type="number" value="1900" min="1900" max="2100"/></div>',
+          '<div>Season: <select id="season">' +
               '<option>-</option>' +
               '<option>Spring</option>' +
               '<option>Summer</option>' +
               '<option>Fall</option>' +
               '<option>Winter</option>' +
-              '</select>'
+              '</select></div>'
         ];
         return parts.join(' ');
       },
@@ -52,12 +117,12 @@
       }
     },
     {
-      question: 'Place orientation:',
+      question: 'Place orientation',
       template: function() {
         var parts = [
-          'City: <input id="city" type="text" /> ',
-          'Country: <input id="country" type="text" />',
-          'Floor: <input id="floor" type="number" value="0" min="0" max="120"/>'
+          '<div>City: <input id="city" type="text" /></div>',
+          '<div>Country: <input id="country" type="text" /></div>',
+          '<div>Floor: <input id="floor" type="number" value="0" min="0" max="120"/></div>'
         ];
         return parts.join(' ');
       },
@@ -74,8 +139,10 @@
       }
     },
     {
-      question: 'Remember the next three words:',
-      template: function(){ return '<p class="word"/>'; },
+      question: 'Remember the next three words',
+      template: function(){
+        return '<p class="word"/>';
+      },
       logic: function($questionBody) {
         hideSubmit();
         nouns = _.shuffle(nouns);
@@ -84,7 +151,7 @@
         setTimeout(function anonimRecurs() {
           if(i < 3) {
             $questionBody.find('.word').text(nouns[++i]);
-            setTimeout(anonimRecurs, 200);
+            setTimeout(anonimRecurs, 1000);
           } else {
             $questionBody.find('.word').text('');
             showSubmit();
@@ -96,9 +163,9 @@
       question: 'What is this called ?',
       template: function() {
         var parts = [
-          '<div><image id="image" /></div>',
-          '<input id="name" type="text" />',
-          '<button id="next">Next Image</button>',
+          '<div><image id="image" style="max-height: 250px;" /></div>',
+          '<div><input id="name" type="text" /></div>',
+          '<button id="next">Next</button>',
           '<input id="words" type="hidden"/>'
         ];
         return parts.join(' ');
@@ -143,9 +210,9 @@
       question: 'What were the three words you were asked to remember ?',
       template: function() {
         var parts = [
-          '1: <input id="word1" type="text"/> ',
-          '2: <input id="word2" type="text"/>',
-          '3: <input id="word3" type="text"/>'
+          '<div>1: <input id="word1" type="text"/></div>',
+          '<div>2: <input id="word2" type="text"/></div>',
+          '<div>3: <input id="word3" type="text"/>'
         ];
         return parts.join(' ');
       },
@@ -163,7 +230,7 @@
       }
     },
     {
-      question: 'Subtract 7:',
+      question: 'Subtract 7',
       template: function() {
         var parts = [
           '<div class="equation"><span id="number"/> - 7 = <input id="diff" type="text"/></div>',
