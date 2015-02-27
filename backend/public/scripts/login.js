@@ -9,7 +9,7 @@ $(function(){
         user: $('#name').val()
       }
     }).done(function(data) {
-      window.location = '/';
+      window.location.reload();
     }).error(function() {
       $(this).prop('disabled', false);
     });

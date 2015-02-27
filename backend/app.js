@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 var session = require('express-session')
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
+var exam = require('./routes/exam');
 
 var app = express();
 
@@ -30,10 +30,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+var authorization = function(req, res, next) {
+  if(req.session.user)
+    next();
+  else
+    res.render('login', {
+      page:'login',
+      scripts: ['/scripts/login.js'],
+      stylesheets: ['/style/login.css']
+    });
+};
+
 app.use('/login', login);
 app.use('/logout', logout);
-app.use('/users', users);
+
+app.use('/', authorization, routes);
+app.use('/exam', authorization, exam);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -61,8 +73,9 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
-        message: err.message,
-        error: {}
+      title: 'oops!',
+      message: err.message,
+      error: {}
     });
 });
 

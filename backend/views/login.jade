@@ -1,10 +1,7 @@
 extends layout
 
 block content
-  div(class='login-container container')
-    h1(class='title')= 'Welcome to Mini-Mental'
-    div(class='login-form form-container')
-      div
-        label(for='name')= 'ID #'
-        input(type='text', id='name', name='name')
-      button(class='login-button')= 'Log In'
+  div
+    label(for='name')= 'ID #'
+    input(type='text', id='name', name='name')
+  button(class='login-button')= 'Log In'

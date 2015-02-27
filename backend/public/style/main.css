@@ -45,11 +45,23 @@ button {
 }
 
 .title,
-.form-container {
+.form {
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.9);
 }
 
 .form-container {
+    height: calc(100% - 60px - 53.6px);
+}
+
+.form-container:before {
+    content: '';
     display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.form {
+    display: inline-block;
+    vertical-align: middle;
 }

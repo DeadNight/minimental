@@ -1,9 +1,13 @@
 $(function(){
+  $('.exam-button').click(function() {
+    window.location = '/exam';
+  });
+
   $('.logout-button').click(function() {
     $(this).prop('disabled', true);
     $.ajax({
       url: '/logout',
-      type: 'get',
+      type: 'get'
     }).done(function(data) {
       window.location = '/';
     }).error(function() {

@@ -4,13 +4,6 @@
     background-image: url('/images/MMSE.jpg');
 }
 
-.index-container:before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-}
-
 .index-form {
     vertical-align: middle;
 }
