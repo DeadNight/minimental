@@ -3,17 +3,14 @@
   "version": "0.0.0",
   "description": "MMSE project",
   "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/DeadNight/minimental.git"
   },
   "keywords": [
     "MMSE",
-    "minimental",
-    "frontend"
+    "minimental"
   ],
   "authors": [
     "nirleibo <nir.leibo@gmail.com>",
@@ -21,7 +18,7 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DeadNight/minimental-frontend/issues"
+    "url": "https://github.com/DeadNight/minimental/issues"
   },
   "homepage": "https://github.com/DeadNight/minimental-frontend"
 }

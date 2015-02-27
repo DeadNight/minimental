@@ -1,0 +1,14 @@
+.login-container {
+    width: 629px;
+    height: 472px;
+    background-image: url('/images/MMSE.jpg');
+}
+
+.login label {
+    display: inline-block;
+    width: 100px;
+}
+
+.login label:after {
+    content: ':';
+}

@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-size: 20px;
+    text-align: center;
+    line-height: 2em;
+}
+
+body:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+input,
+select,
+button {
+    font-size: 20px;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.container {
+    display: inline-block;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+}
+
+.title,
+.form-container {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.form-container {
+    display: inline-block;
+}

@@ -27,8 +27,8 @@
     fill: white;
 }
 
-#clock #min,
-#clock #hour {
+#clock #minuteHand,
+#clock #hourHand {
     stroke-width: 1px;
     fill: #333333;
     stroke: #555555;
