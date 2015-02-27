@@ -168,88 +168,88 @@
         };
       }
     },
-//    {
-//      question: 'What were the three words you were asked to remember ?',
-//      template: function() {
-//        var parts = [
-//          '<div><label for="word1">1:</label> <input id="word1" type="text"/></div>',
-//          '<div><label for="word2">2:</label> <input id="word2" type="text"/></div>',
-//          '<div><label for="word3">3:</label> <input id="word3" type="text"/>'
-//        ];
-//        return parts.join(' ');
-//      },
-//      result: function($questionBody) {
-//        var $word1 = $questionBody.find('#word1');
-//        var $word2 = $questionBody.find('#word2');
-//        var $word3 = $questionBody.find('#word3');
-//
-//        return {
-//          word1: $word1.val(),
-//          word2: $word2.val(),
-//          word3: $word3.val(),
-//          words: nouns.slice(0, 3)
-//        };
-//      }
-//    },
-//    {
-//      question: 'Subtract 7',
-//      template: function() {
-//        var parts = [
-//          '<div class="equation"><label for="diff"><span id="number"/> - 7 =</label> <input id="diff" type="number" required/></div>',
-//          '<button id="next">Next</button>',
-//          '<input id="numbers" type="hidden"/>'
-//        ];
-//
-//        return parts.join(' ');
-//      },
-//      logic: function($questionBody) {
-//        hideSubmit();
-//        var validate = this.validate;
-//
-//        var $number = $questionBody.find('#number');
-//        var $diff = $questionBody.find('#diff');
-//        var $numbers = $questionBody.find('#numbers');
-//        $number.text(100);
-//
-//        $questionBody.find('#next').prop('disabled', true);
-//        $questionBody.find('input, select').on('input', function() {
-//          $questionBody.find('#next').prop('disabled', !$diff[0].validity.valid);
-//        });
-//
-//        var i = 0;
-//        $questionBody.find('#next').click(function() {
-//          var diff = parseInt($diff.val(), 10);
-//
-//          if(i++ == 0)
-//            $numbers.val(diff);
-//          else
-//            $numbers.val($numbers.val().split(',').concat(diff).join());
-//
-//          $number.text(diff || 0);
-//          $diff.val('');
-//          $questionBody.find('#next').prop('disabled', true);
-//
-//          if(i >= 4) {
-//            $questionBody.find('#equation').hide();
-//            $questionBody.find('#next').hide();
-//            showSubmit(function(){ return validate($questionBody) });
-//          }
-//        });
-//      },
-//      validate: function($questionBody) {
-//        var $diff = $questionBody.find('#diff');
-//
-//        return $diff[0].validity.valid
-//      },
-//      result: function($questionBody) {
-//        var $diff = $questionBody.find('#diff');
-//        var $numbers = $questionBody.find('#numbers');
-//
-//        return {
-//          numbers: $numbers.val().split(',').concat(parseInt($diff.val(), 10))
-//        };
-//      }
-//    },
+    {
+      question: 'What were the three words you were asked to remember ?',
+      template: function() {
+        var parts = [
+          '<div><label for="word1">1:</label> <input id="word1" type="text"/></div>',
+          '<div><label for="word2">2:</label> <input id="word2" type="text"/></div>',
+          '<div><label for="word3">3:</label> <input id="word3" type="text"/>'
+        ];
+        return parts.join(' ');
+      },
+      result: function($questionBody) {
+        var $word1 = $questionBody.find('#word1');
+        var $word2 = $questionBody.find('#word2');
+        var $word3 = $questionBody.find('#word3');
+
+        return {
+          word1: $word1.val(),
+          word2: $word2.val(),
+          word3: $word3.val(),
+          words: nouns.slice(0, 3)
+        };
+      }
+    },
+    {
+      question: 'Subtract 7',
+      template: function() {
+        var parts = [
+          '<div class="equation"><label for="diff"><span id="number"/> - 7 =</label> <input id="diff" type="number" required/></div>',
+          '<button id="next">Next</button>',
+          '<input id="numbers" type="hidden"/>'
+        ];
+
+        return parts.join(' ');
+      },
+      logic: function($questionBody) {
+        hideSubmit();
+        var validate = this.validate;
+
+        var $number = $questionBody.find('#number');
+        var $diff = $questionBody.find('#diff');
+        var $numbers = $questionBody.find('#numbers');
+        $number.text(100);
+
+        $questionBody.find('#next').prop('disabled', true);
+        $questionBody.find('input, select').on('input', function() {
+          $questionBody.find('#next').prop('disabled', !$diff[0].validity.valid);
+        });
+
+        var i = 0;
+        $questionBody.find('#next').click(function() {
+          var diff = parseInt($diff.val(), 10);
+
+          if(i++ == 0)
+            $numbers.val(diff);
+          else
+            $numbers.val($numbers.val().split(',').concat(diff).join());
+
+          $number.text(diff || 0);
+          $diff.val('');
+          $questionBody.find('#next').prop('disabled', true);
+
+          if(i >= 4) {
+            $questionBody.find('#equation').hide();
+            $questionBody.find('#next').hide();
+            showSubmit(function(){ return validate($questionBody) });
+          }
+        });
+      },
+      validate: function($questionBody) {
+        var $diff = $questionBody.find('#diff');
+
+        return $diff[0].validity.valid
+      },
+      result: function($questionBody) {
+        var $diff = $questionBody.find('#diff');
+        var $numbers = $questionBody.find('#numbers');
+
+        return {
+          numbers: $numbers.val().split(',').concat(parseInt($diff.val(), 10))
+        };
+      }
+    },
 //    {
 //      question: 'Write the following time in 24H format:',
 //      template: function(){

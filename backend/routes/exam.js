@@ -169,7 +169,6 @@ router.post('/', function(req, res, next) {
       continue;
     var word = question4.words[w].toLowerCase().replace(/s$/, '');
     var image = question4.images[w];
-    console.log(word, image);
     if(word == image) {
       score[q] += 1;
     } else if(spellingMistake(word, image, mistakes[image])) {
@@ -184,13 +183,122 @@ router.post('/', function(req, res, next) {
     }
   }
 
+  // Question 5
+  var q = 3;
+  var question5 = answers[q];
+  score[q] = 0;
+
+  var mistakes = {
+    raindrop: {
+      a: ['e'],
+      i: ['y'],
+      'in': ['ne'],
+      o: ['oo']
+    },
+    kitten: {
+      k: ['c'],
+      i: ['ea', 'ee', 'y'],
+      tt: ['t', 'd']
+    },
+    table: {
+      a: ['e'],
+      le: ['el']
+    },
+    school: {
+      ch: ['k', 'c'],
+      oo: ['o', 'u']
+    },
+    string: {
+      i: ['ea', 'ee', 'y']
+    },
+    bee: {
+      ee: ['e', 'ea', 'i']
+    },
+    moon: {
+      oo: ['o', 'u']
+    },
+    family: {
+      a: ['e'],
+      i: ['ea', 'ee', 'y'],
+      y: ['ea', 'ee', 'i']
+    },
+    dress: {
+      ss: ['s'],
+      e: ['a']
+    },
+    camp: {
+      c: ['k'],
+      a: ['e']
+    }
+  };
+
+  if(question5.word1) {
+    var input = question5.word1.toLowerCase();
+    for(var w in question5.words) {
+      var word = question5.words[w];
+      if(input == word) {
+        score[q] += 1;
+        break;
+      } else if(spellingMistake(input, word, mistakes[word])) {
+        score[q] += 0.5;
+        break;
+      }
+    }
+  }
+
+  if(question5.word2) {
+    var input = question5.word2.toLowerCase();
+    for(var w in question5.words) {
+      var word = question5.words[w];
+      if(input == word) {
+        score[q] += 1;
+        break;
+      } else if(spellingMistake(input, word, mistakes[word])) {
+        score[q] += 0.5;
+        break;
+      }
+    }
+  }
+
+  if(question5.word3) {
+    var input = question5.word3.toLowerCase();
+    for(var w in question5.words) {
+      var word = question5.words[w];
+      if(input == word) {
+        score[q] += 1;
+        break;
+      } else if(spellingMistake(input, word, mistakes[word])) {
+        score[q] += 0.5;
+        break;
+      }
+    }
+  }
+  // Question 6
+  var q = 4;
+  var question6 = answers[q];
+  score[q] = 0;
+
+  var result = 100 - 7;
+  for(var n in question6.numbers) {
+    var number = question6.numbers[n];
+
+    if(number == result) {
+      score[q] += 1;
+      result -= 7;
+    } else {
+      if(Math.abs(number - result) <= 1) {
+        score[q] += 0.5;
+      }
+      result = number - 7;
+    }
+  }
+
   res.json({score: score});
 });
 
 function spellingMistake(input, actual, mistakes) {
   for(var m in mistakes) {
     var mistake = mistakes[m];
-    console.log(input.toLowerCase().replace(RegExp('('+ mistake.join('|') +')'), m));
     if(input.toLowerCase().replace(RegExp('('+ mistake.join('|') +')', 'g'), m) == actual) {
       return true;
       break;
