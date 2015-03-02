@@ -1,0 +1,8 @@
+extend layout
+
+block content
+  button(class="back-button")= 'Back'
+  for exam in exams || []
+    div(class="exam")
+      p= "date: " + exam.date.getDate() + "/" + exam.date.getMonth()+1 + "/" + exam.date.getFullYear() + " " + exam.date.getHours() + ":" + exam.date.getMinutes()
+      p= "score: " + exam.totalScore

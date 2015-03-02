@@ -1,0 +1,9 @@
+.exam {
+    line-height: 1em;
+    border-top: 1px solid #e7e7e7;
+}
+
+.exam:first-of-type {
+    margin-top: 10px;
+    border-top: none;
+}

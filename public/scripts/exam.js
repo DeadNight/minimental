@@ -508,15 +508,22 @@
         hideSubmit();
         $questionBody.text('Saving Exam');
 
-        $.ajax({
-          url: '/exam',
-          method: 'post',
-          contentType: 'application/json',
-          data: JSON.stringify(answers),
-          dataType: 'json'
-        }).done(function(data) {
-          $questionBody.text('Result: '+ JSON.stringify(data));
-        }).error(function(err) {
+        $.when(
+          $.ajax({
+            url: '/exam/lastScore',
+            method: 'get',
+            contentType: 'application/json',
+          }),
+          $.ajax({
+            url: '/exam',
+            method: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(answers),
+            dataType: 'json'
+          })
+        ).done(function(lastExamData, data) {
+          $questionBody.text('Result: '+ JSON.stringify(data[0].score) + (lastExamData[0] ? ' Last Score: ' + lastExamData[0].score : ''));
+        }).fail(function(err) {
           $questionBody.text('Error: '+ err);
         }).always(function() {
           $('.back').show();

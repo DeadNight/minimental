@@ -6,7 +6,7 @@ var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var mongoUrl = 'mongodb://localhost:27017/minimental';
-var assert = require('assert');
+var _ = require('underscore');
 
 /* GET exam page. */
 router.get('/', function(req, res, next) {
@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
       'scripts/exam.js'
     ],
     stylesheets: ['/style/exam.css']
-  })
+  });
 });
 
 router.post('/', function(req, res, next) {
@@ -386,14 +386,83 @@ router.post('/', function(req, res, next) {
 
   score[q] = Math.max(score1, score2);
 
+  var totalScore = _.reduce(score, function(memo, num){ return memo + num; }, 0);
+
   MongoClient.connect(mongoUrl, function(err, db) {
-    assert.equal(null, err);
-    console.log("Connected correctly to server");
+    if(err) {
+      res.status(500);
+      res.json(err);
+      return;
+    }
+
+    var collection = db.collection('exams');
+    collection.insert({
+      user: req.session.user,
+      date: new Date(),
+      answers: answers,
+      totalScore: totalScore,
+      scores: score
+    }, function(err, result) {
+//      if(err) {
+//        res.status(500);
+//        res.json(err);
+//        return;
+//      }
+      console.log("Inserted new exam into the exams collection");
+
+      res.json({ score: totalScore });
+    });
 
     db.close();
   });
+});
 
-  res.json({score: score});
+router.get('/history', function(req, res, next) {
+  MongoClient.connect(mongoUrl, function(err, db) {
+    if(err) {
+      res.status(500);
+      res.json(err);
+      return;
+    }
+
+    var collection = db.collection('exams');
+    collection.find({ user: req.session.user }, { sort: [['date', 'desc']] }).toArray(function(err, docs) {
+      if(err) {
+        res.status(500);
+        res.json(err);
+        return;
+      }
+      res.render('history', {
+        page: 'history',
+        title: 'Mini-Mental Exam History',
+        scripts: [
+          '/scripts/history.js'
+        ],
+        stylesheets: ['/style/history.css'],
+        exams: docs
+      });
+    });
+  });
+});
+
+router.get('/lastScore', function(req, res, next) {
+  MongoClient.connect(mongoUrl, function(err, db) {
+    if(err) {
+      res.status(500);
+      res.json(err);
+      return;
+    }
+
+    var collection = db.collection('exams');
+    collection.find({ user: req.session.user }, { sort: [['date', 'desc']], limit: 1 }).toArray(function(err, docs) {
+      if(err) {
+        res.status(500);
+        res.json(err);
+        return;
+      }
+      res.json({ score: docs.length ? docs[0].totalScore : undefined });
+    });
+  });
 });
 
 function spellingMistake(input, actual, mistakes) {
