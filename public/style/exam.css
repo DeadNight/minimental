@@ -1,0 +1,61 @@
+body {
+    font-size: 30px;
+    line-height: 1.5em;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+}
+
+input,
+select {
+    width: 150px;
+}
+
+.title,
+.question-title {
+    margin: 10px 0;
+}
+
+.exam-container {
+    position: relative;
+    width: 851px;
+    height: 564px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.exam-container:before {
+    content: url('/images/exam.jpg');
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.1;
+}
+
+.exam-form {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1;
+}
+
+.back {
+    display: none;
+}
+
+#clock #face {
+    stroke-width: 2px;
+    stroke: black;
+    fill: white;
+}
+
+#clock #minuteHand,
+#clock #hourHand {
+    stroke-width: 1px;
+    fill: #333333;
+    stroke: #555555;
+    cursor: pointer;
+}

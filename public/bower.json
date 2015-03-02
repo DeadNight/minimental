@@ -1,0 +1,29 @@
+{
+  "name": "minimental-frontend",
+  "version": "0.0.0",
+  "authors": [
+    "nirleibo <nir.leibo@gmail.com>",
+    "ronnaor <ron.naor@gmail.com>"
+  ],
+  "description": "MMSE project frontend",
+  "main": "index.html",
+  "keywords": [
+    "MMSE",
+    "minimental",
+    "frontend"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.7.0",
+    "moment": "~2.9.0",
+    "jquery": "~2.1.3"
+  }
+}

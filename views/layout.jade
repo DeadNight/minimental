@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title= 'Mini-Mental'
+    link(rel='stylesheet', href='/style/main.css')
+    for stylesheet in (stylesheets || [])
+      link(rel='stylesheet', href=stylesheet)
+  body
+    div(class='container '+ page +'-container')
+      h1(class='title')= title || 'Welcome to Mini-Mental'
+      div(class='form-container')
+        div(class='form '+ page +'-form')
+          block content
+
+  script(src='bower_components/jquery/dist/jquery.min.js')
+  for script in (scripts || [])
+    script(src=script)

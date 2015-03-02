@@ -1,0 +1,13 @@
+.index-container {
+    width: 629px;
+    height: 472px;
+    background-image: url('/images/MMSE.jpg');
+}
+
+.index-form {
+    vertical-align: middle;
+}
+
+.index-form button {
+    margin: 10px;
+}
